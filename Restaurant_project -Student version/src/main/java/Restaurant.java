@@ -11,6 +11,7 @@ public class Restaurant {
     public LocalTime closingTime;
     public LocalTime currentTime=LocalTime.now();
     private List<Item> menu = new ArrayList<Item>();
+    public int orderTotal=0;
 
     public Restaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;
@@ -33,7 +34,7 @@ public class Restaurant {
     }
 
     public List<Item> getMenu() {
-       return Collections.unmodifiableList(menu);
+        return Collections.unmodifiableList(menu);
     }
 
     private Item findItemByName(String itemName){
@@ -48,7 +49,7 @@ public class Restaurant {
         Item newItem = new Item(name,price);
         menu.add(newItem);
     }
-    
+
     public void removeFromMenu(String itemName) throws itemNotFoundException {
 
         Item itemToBeRemoved = findItemByName(itemName);
@@ -58,16 +59,27 @@ public class Restaurant {
         menu.remove(itemToBeRemoved);
     }
     public void displayDetails(){
-        System.out.println("Restaurant:"+ name + "\n"
-                +"Location:"+ location + "\n"
-                +"Opening time:"+ openingTime +"\n"
-                +"Closing time:"+ closingTime +"\n"
-                +"Menu:"+"\n"+getMenu());
-
-    }
+        System.out.println("Restaurant:"+ name + "\n" +"Location:"+ location + "\n" +"Opening time:"
+                + openingTime +"\n" +"Closing time:"+ closingTime +"\n" +"Menu:"+"\n"+getMenu()); }
 
     public String getName() {
         return name;
+    }
+
+    public int addToCart(String... itemName){
+        for (String s : itemName) {
+            Item newCartItem = findItemByName(s);
+            orderTotal = orderTotal + newCartItem.getPrice();
+        }
+        return orderTotal;
+    }
+
+    public int removeFromCart(String... itemName){
+        for (String s : itemName) {
+            Item newCartItem = findItemByName(s);
+            orderTotal = orderTotal - newCartItem.getPrice();
+        }
+        return orderTotal;
     }
 
 }
