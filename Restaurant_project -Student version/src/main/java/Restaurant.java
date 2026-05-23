@@ -9,6 +9,7 @@ public class Restaurant {
     private String location;
     public LocalTime openingTime;
     public LocalTime closingTime;
+    public LocalTime currentTime=LocalTime.now();
     private List<Item> menu = new ArrayList<Item>();
 
     public Restaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
@@ -25,7 +26,11 @@ public class Restaurant {
         else{return false;}
     }
 
-    public LocalTime getCurrentTime(){ return  LocalTime.now(); }
+    public LocalTime getCurrentTime(){ return  currentTime; }
+
+    public void setCurrentTime(LocalTime currentTime) {
+        this.currentTime = currentTime;
+    }
 
     public List<Item> getMenu() {
        return Collections.unmodifiableList(menu);
